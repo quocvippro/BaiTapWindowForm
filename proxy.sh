@@ -39,11 +39,11 @@ setgid 65535
 setuid 65535
 stacksize 6291456 
 flush
-$(awk -F "/" '{print "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" "flush\n"}' ${WORKDATA})
+$(awk -F "/" '{print "proxy -6 -n -a -p" $2 " -i" $1 " -e"$3"\n" "flush\n"}' ${WORKDATA})
 
 gen_proxy_file_for_user() {
     cat >proxy.txt <<EOF
-$(awk -F "/" '{print $3 ":" $4 }' ${WORKDATA})
+$(awk -F "/" '{print $1 ":" $2 }' ${WORKDATA})
 EOF
 }
 
@@ -55,7 +55,7 @@ gen_data() {
 
 gen_ifconfig() {
     cat <<EOF
-$(awk -F "/" '{print "ifconfig eth0 inet6 add " $5 "/64"}' ${WORKDATA})
+$(awk -F "/" '{print "ifconfig eth0 inet6 add " $3 "/64"}' ${WORKDATA})
 EOF
 }
 echo "installing apps"
